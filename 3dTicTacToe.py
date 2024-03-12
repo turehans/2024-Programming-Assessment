@@ -34,12 +34,37 @@ def generate_starting_board():
     return board
 
 
+def get_player_input():
+    global BOARD_SIZE
+    position = {}
+    cords = ["x", "y", "z"]
+
+    for cord in cords:
+        gotten_player_input = False
+        while gotten_player_input == False:
+            try:
+                position.update(
+                    {cord: (
+                        -1 + int(input(f"Please enter the {cord} position between 1 and {BOARD_SIZE + 1}: \n")))}
+                )
+            except ValueError:
+                print("Please enter a valid number")
+            if 0 < position[cord] < BOARD_SIZE:
+                gotten_player_input = True
+            else:
+                print("Please enter a number in the desired range")
+
+    return position
+
+
 def main():
 
     board = {}
     welcome_message()
     board = generate_starting_board()
     print(board)
+
+    get_player_input()
 
 
 if __name__ == "__main__":
