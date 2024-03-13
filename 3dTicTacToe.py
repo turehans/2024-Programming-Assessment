@@ -22,7 +22,7 @@ def welcome_message():
     print("1. The game is played on a 3d grid.")
     print("2. Players take turns placing their marks (X or O) on an empty cell.")
     print("3. The goal is to get three marks in a row, column, or diagonal.")
-    print("4. The game ends in a draw if all cells are filled without a winner.")
+    print("4. The game ends in a draw if all cells are filled without a winner.\n", end='\n')
 
 
 def generate_starting_board():
@@ -34,6 +34,8 @@ def generate_starting_board():
 
     return board
 
+
+def 
 
 def get_player_input(board):
     global BOARD_SIZE
@@ -57,35 +59,34 @@ def get_player_input(board):
                 else:
                     print("Please enter a number in the desired range")
 
-        if check_that_position_is_clear(board, position) == True:
+        index = str(position['x']*BOARD_SIZE + position['y'])
+        if check_that_position_is_clear(board, index) == True:
             cord_is_available = True
         else:
             print("Your position has already been taken, please try again\n")
 
-    return position
+    return index
 
 
-def check_that_position_is_clear(board, position):
+def check_that_position_is_clear(board, index):
     global BOARD_SIZE
-    if board[f"{position["x"]*BOARD_SIZE + position["y"]}"][BOARD_SIZE-1] == ' ':
+    if board[index][BOARD_SIZE-1] == ' ':
         return True
     else:
         return False
 
 
-def update_board(board, piece, position):
+def update_board(board, piece, index):
     global BOARD_SIZE
     for i in range(BOARD_SIZE):
-        if position[f"{position["x"]*BOARD_SIZE + position["y"]}"][i] == ' ':
-            position[f"{position["x"]*BOARD_SIZE + position["y"]}"][i] == ' ':
-
-    board[f"{position['x']*BOARD_SIZE + position['y']}"][position['z']] = piece
+        if board[index][i] == ' ':
+            board[index][i] = piece
 
 
 def player_turn(board, current_player):
-    position = get_player_input(board)
+    index = get_player_input(board)
     piece = 'x'
-    board = update_board(board, piece, position)
+    board = update_board(board, piece, index)
 
 
 def main():
@@ -93,7 +94,7 @@ def main():
     board = {}
     welcome_message()
     board = generate_starting_board()
-    print(board)
+   
     player_turn(board, 1)
 
 
