@@ -12,6 +12,7 @@ logo = """
 """
 
 BOARD_SIZE = 3
+MIN_POSITION_SIZE = 0
 
 
 def welcome_message():
@@ -34,27 +35,57 @@ def generate_starting_board():
     return board
 
 
-def get_player_input():
+def get_player_input(board):
     global BOARD_SIZE
     position = {}
-    cords = ["x", "y", "z"]
+    cords = ["x", "y"]
 
-    for cord in cords:
-        gotten_player_input = False
-        while gotten_player_input == False:
-            try:
-                position.update(
-                    {cord: (
-                        -1 + int(input(f"Please enter the {cord} position between 1 and {BOARD_SIZE + 1}: \n")))}
-                )
-            except ValueError:
-                print("Please enter a valid number")
-            if 0 < position[cord] < BOARD_SIZE:
-                gotten_player_input = True
-            else:
-                print("Please enter a number in the desired range")
+    cord_is_available = False
+    while cord_is_available == False:
+        for cord in cords:
+            gotten_player_input = False
+            while gotten_player_input == False:
+                try:
+                    position.update(
+                        {cord: (
+                            -1 + int(input(f"Please enter the {cord} position between 1 and {BOARD_SIZE}: \n")))}
+                    )
+                except ValueError:
+                    print("Please enter a valid number")
+                if 0 <= position[cord] < BOARD_SIZE:
+                    gotten_player_input = True
+                else:
+                    print("Please enter a number in the desired range")
+
+        if check_that_position_is_clear(board, position) == True:
+            cord_is_available = True
+        else:
+            print("Your position has already been taken, please try again\n")
 
     return position
+
+
+def check_that_position_is_clear(board, position):
+    global BOARD_SIZE
+    if board[f"{position["x"]*BOARD_SIZE + position["y"]}"][BOARD_SIZE-1] == ' ':
+        return True
+    else:
+        return False
+
+
+def update_board(board, piece, position):
+    global BOARD_SIZE
+    for i in range(BOARD_SIZE):
+        if position[f"{position["x"]*BOARD_SIZE + position["y"]}"][i] == ' ':
+            position[f"{position["x"]*BOARD_SIZE + position["y"]}"][i] == ' ':
+
+    board[f"{position['x']*BOARD_SIZE + position['y']}"][position['z']] = piece
+
+
+def player_turn(board, current_player):
+    position = get_player_input(board)
+    piece = 'x'
+    board = update_board(board, piece, position)
 
 
 def main():
@@ -63,8 +94,7 @@ def main():
     welcome_message()
     board = generate_starting_board()
     print(board)
-
-    get_player_input()
+    player_turn(board, 1)
 
 
 if __name__ == "__main__":
