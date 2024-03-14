@@ -223,7 +223,7 @@ def get_player_input(board):
                     print("Please enter a number in the desired range")
 
         # Calculate the index based on the entered positions
-        index = str(position['x']*BOARD_SIZE + position['y'])
+        index = str(position['y']*BOARD_SIZE + position['x'])
         # Check if the position is clear
         if check_that_position_is_clear(board, index) == True:
             cord_is_available = True  # Set the flag to True if the position is available
