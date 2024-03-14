@@ -1,3 +1,5 @@
+import random
+
 # My 3d tic tac toe
 # Define the logo for the game
 logo = """
@@ -13,8 +15,7 @@ logo = """
 """
 
 # Define the size of the board
-BOARD_SIZE = 3
-MIN_POSITION_SIZE = 0
+BOARD_SIZE = 2
 
 
 # Function to display the welcome message
@@ -183,7 +184,7 @@ def print_board(board):
             print("\n")
 
 
-def get_player_input(board):
+def get_player_input(board, current_player):
     """
     Prompts the player to enter the x and y positions on the board and returns the index of the position.
 
@@ -197,6 +198,8 @@ def get_player_input(board):
         ValueError: If the player enters an invalid number.
 
     """
+
+    print(f"Player {current_player} it is your turn\n")
 
     # Define the size of the board
     global BOARD_SIZE
@@ -280,11 +283,26 @@ def player_turn(board, current_player):
     Returns the updated game board.
     """
     index = get_player_input(
-        board)  # Get the player's input for the desired position
-    piece = 'x'  # Set the player's piece to 'x'
+        board, current_player)  # Get the player's input for the desired position
+    if current_player == 0:
+        piece = 'X'  # Set the player's piece to 'x'
+    else:
+        piece = 'O'
     # Update the game board with the player's piece at the specified index
     board = update_board(board, piece, index)
     return board
+
+
+def game_loop(board, current_player):
+    current_player = (current_player + 1) % 2
+    print_board(board)
+
+    if check_for_win(board) == False:
+        board = player_turn(board, current_player)
+    else:
+        print(f"Congrates Player{current_player}, you won.")
+        return
+    game_loop(board, current_player)
 
 
 def main():
@@ -294,11 +312,9 @@ def main():
     board = {}
     welcome_message()
     board = generate_starting_board()
-    print_board(board)
 
-    board = player_turn(board, 1)
-    print_board(board)
-    print(check_for_win(board))
+    current_player = -1
+    game_loop(board, current_player)
 
 
 if __name__ == "__main__":
