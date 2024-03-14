@@ -15,6 +15,7 @@ logo = """
 """
 
 # Define the size of the board
+
 BOARD_SIZE = 2
 
 
