@@ -64,6 +64,17 @@ def check_for_win(board):
             if len(set(column)) == 1 and column[0] != ' ':
                 return True
 
+    # check vertical
+    for x_cord in range(BOARD_SIZE):
+        for y_cord in range(BOARD_SIZE):
+            vertical = []
+            index = str(x_cord * BOARD_SIZE + y_cord)
+            for z_cord in range(BOARD_SIZE):
+                vertical.append(board[index][z_cord])
+            # if all elements in the column are the same and not empty, there is a winner
+            if len(set(vertical)) == 1 and column[0] != ' ':
+                return True
+
     # Check diagonals
     for z_cord in range(BOARD_SIZE):
         diagonal1 = []
@@ -80,56 +91,71 @@ def check_for_win(board):
         if len(set(diagonal2)) == 1 and diagonal2[0] != ' ':
             return True
 
-    # Check 3D diagonals
+    # Check diagonals x stays constant
     for x_cord in range(BOARD_SIZE):
-        for y_cord in range(BOARD_SIZE):
-            diagonal1 = []
-            diagonal2 = []
-            for z_cord in range(BOARD_SIZE):
-                index1 = str(x_cord * BOARD_SIZE + y_cord)
-                index2 = str(x_cord * BOARD_SIZE + (BOARD_SIZE - 1 - y_cord))
-                diagonal1.append(board[index1][z_cord])
-                diagonal2.append(board[index2][z_cord])
-            # If all elements in the diagonal1 are the same and not empty, there is a winner
-            if len(set(diagonal1)) == 1 and diagonal1[0] != ' ':
-                return True
-            # If all elements in the diagonal2 are the same and not empty, there is a winner
-            if len(set(diagonal2)) == 1 and diagonal2[0] != ' ':
-                return True
+        diagonal1 = []
+        diagonal2 = []
+        for i in range(BOARD_SIZE):
+            index1 = str(x_cord*BOARD_SIZE + i)
+            index2 = str(x_cord * BOARD_SIZE + (BOARD_SIZE - 1 - i))
+            diagonal1.append(board[index1][i])
+            diagonal2.append(board[index2][i])
+        # If all elements in the diagonal1 are the same and not empty, there is a winner
+        if len(set(diagonal1)) == 1 and diagonal1[0] != ' ':
+            return True
+        # If all elements in the diagonal2 are the same and not empty, there is a winner
+        if len(set(diagonal2)) == 1 and diagonal2[0] != ' ':
+            return True
 
-    # Check 3D diagonals
+    # Check diagonals y stays constant
     for y_cord in range(BOARD_SIZE):
-        for z_cord in range(BOARD_SIZE):
-            diagonal1 = []
-            diagonal2 = []
-            for x_cord in range(BOARD_SIZE):
-                index1 = str(x_cord * BOARD_SIZE + y_cord)
-                index2 = str((BOARD_SIZE - 1 - x_cord) * BOARD_SIZE + y_cord)
-                diagonal1.append(board[index1][z_cord])
-                diagonal2.append(board[index2][z_cord])
-            # If all elements in the diagonal1 are the same and not empty, there is a winner
-            if len(set(diagonal1)) == 1 and diagonal1[0] != ' ':
-                return True
-            # If all elements in the diagonal2 are the same and not empty, there is a winner
-            if len(set(diagonal2)) == 1 and diagonal2[0] != ' ':
-                return True
+        diagonal1 = []
+        diagonal2 = []
+        for i in range(BOARD_SIZE):
+            index1 = str(i * BOARD_SIZE + y_cord)
+            index2 = str(i * BOARD_SIZE + (BOARD_SIZE - 1 - y_cord))
+            diagonal1.append(board[index1][i])
+            diagonal2.append(board[index2][i])
+        # If all elements in the diagonal1 are the same and not empty, there is a winner
+        if len(set(diagonal1)) == 1 and diagonal1[0] != ' ':
+            return True
+        # If all elements in the diagonal2 are the same and not empty, there is a winner
+        if len(set(diagonal2)) == 1 and diagonal2[0] != ' ':
+            return True
 
-    # Check 3D diagonals
-    for x_cord in range(BOARD_SIZE):
-        for z_cord in range(BOARD_SIZE):
-            diagonal1 = []
-            diagonal2 = []
-            for y_cord in range(BOARD_SIZE):
-                index1 = str(x_cord * BOARD_SIZE + y_cord)
-                index2 = str((BOARD_SIZE - 1 - x_cord) * BOARD_SIZE + y_cord)
-                diagonal1.append(board[index1][z_cord])
-                diagonal2.append(board[index2][z_cord])
-            # If all elements in the diagonal1 are the same and not empty, there is a winner
-            if len(set(diagonal1)) == 1 and diagonal1[0] != ' ':
-                return True
-            # If all elements in the diagonal2 are the same and not empty, there is a winner
-            if len(set(diagonal2)) == 1 and diagonal2[0] != ' ':
-                return True
+    # Check diagonals where x and y are the same and we are changing z
+    diagonal1 = []
+    diagonal2 = []
+    diagonal3 = []
+    diagonal4 = []
+    for i in range(BOARD_SIZE):
+        # bottom left
+        index1 = str(i * BOARD_SIZE + i)
+        # top right
+        index2 = str(i * BOARD_SIZE + (BOARD_SIZE - 1 - i))
+        # bottom right
+        index3 = str((BOARD_SIZE - 1 - i) *
+                     BOARD_SIZE + (BOARD_SIZE - 1 - i))
+        # top left
+        index4 = str((BOARD_SIZE - 1 - i) * BOARD_SIZE + i)
+
+        diagonal1.append(board[index1][i])
+        diagonal2.append(board[index2][i])
+        diagonal3.append(board[index3][i])
+        diagonal4.append(board[index4][i])
+
+    # If all elements in the diagonal1 are the same and not empty, there is a winner
+    if len(set(diagonal1)) == 1 and diagonal1[0] != ' ':
+        return True
+    # If all elements in the diagonal2 are the same and not empty, there is a winner
+    if len(set(diagonal2)) == 1 and diagonal2[0] != ' ':
+        return True
+    # If all elements in the diagonal3 are the same and not empty, there is a winner
+    if len(set(diagonal3)) == 1 and diagonal3[0] != ' ':
+        return True
+    # If all elements in the diagonal4 are the same and not empty, there is a winner
+    if len(set(diagonal4)) == 1 and diagonal4[0] != ' ':
+        return True
 
     # If no winner is found, return False
     return False
@@ -146,10 +172,10 @@ def generate_starting_board():
     """
     global BOARD_SIZE
     board = {}
-    for i in range(BOARD_SIZE):
-        for j in range(BOARD_SIZE):
+    for y_cord in range(BOARD_SIZE):
+        for x_cord in range(BOARD_SIZE):
             # Initialize each cell with an empty space
-            board.update({f"{i*BOARD_SIZE+j}": [' '] * BOARD_SIZE})
+            board.update({f"{x_cord*BOARD_SIZE+y_cord}": [' '] * BOARD_SIZE})
 
     return board
 
@@ -172,9 +198,9 @@ def print_board(board):
         for i in range(1 + (2*BOARD_SIZE)):
             print(' _', end='')
         print("\n")
-        for x_cord in range(BOARD_SIZE):
+        for y_cord in range(BOARD_SIZE):
             print('|', end='')
-            for y_cord in range(BOARD_SIZE):
+            for x_cord in range(BOARD_SIZE):
                 index = str(x_cord*BOARD_SIZE + y_cord)
                 # Print the cell value
                 print(f" {board[index][z_cord]} ", end='|')
@@ -227,7 +253,7 @@ def get_player_input(board, current_player):
                     print("Please enter a number in the desired range")
 
         # Calculate the index based on the entered positions
-        index = str(position['y']*BOARD_SIZE + position['x'])
+        index = str(position['x']*BOARD_SIZE + position['y'])
         # Check if the position is clear
         if check_that_position_is_clear(board, index) == True:
             cord_is_available = True  # Set the flag to True if the position is available
@@ -295,14 +321,24 @@ def player_turn(board, current_player):
 
 
 def game_loop(board, current_player):
-    current_player = (current_player + 1) % 2
-    print_board(board)
+    """
+    This function represents the main game loop.
+    It takes the current game board and the current player as input.
+    It alternates between players, prompts for player input, and updates the board.
+    If a player wins, it prints a congratulatory message and returns.
+    """
+    current_player = (current_player + 1) % 2  # Switch to the next player
+    print_board(board)  # Print the current game board
 
-    if check_for_win(board) == False:
+    if check_for_win(board) == False:  # Check if there is no winner yet
+        # Prompt the current player for their turn
         board = player_turn(board, current_player)
     else:
+        # Print a congratulatory message
         print(f"Congrates Player{current_player}, you won.")
-        return
+        return  # Exit the game loop if a player wins
+
+    # Recursively call the game loop with the updated board and player
     game_loop(board, current_player)
 
 
@@ -313,6 +349,7 @@ def main():
     board = {}
     welcome_message()
     board = generate_starting_board()
+    print(board)
 
     current_player = -1
     game_loop(board, current_player)
