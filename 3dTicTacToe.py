@@ -72,7 +72,7 @@ def check_for_win(board):
             for z_cord in range(BOARD_SIZE):
                 vertical.append(board[index][z_cord])
             # if all elements in the column are the same and not empty, there is a winner
-            if len(set(vertical)) == 1 and column[0] != ' ':
+            if len(set(vertical)) == 1 and vertical[0] != ' ':
                 return True
 
     # Check diagonals
@@ -123,7 +123,7 @@ def check_for_win(board):
         if len(set(diagonal2)) == 1 and diagonal2[0] != ' ':
             return True
 
-    # Check diagonals where x and y are the same and we are changing z
+    # Check diagonals where x and y and z are changing
     diagonal1 = []
     diagonal2 = []
     diagonal3 = []
@@ -349,7 +349,6 @@ def main():
     board = {}
     welcome_message()
     board = generate_starting_board()
-    print(board)
 
     current_player = -1
     game_loop(board, current_player)
