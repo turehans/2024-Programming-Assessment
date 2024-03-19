@@ -16,7 +16,7 @@ logo = """
 
 # Define the size of the board
 
-BOARD_SIZE = 2
+BOARD_SIZE = 3
 
 
 # Function to display the welcome message
@@ -302,7 +302,7 @@ def update_board(board, piece, index):
     return board
 
 
-def player_turn(board, current_player):
+def player_turn(board, piece):
     """
     Takes the current game board and the current player as input.
     Prompts the player for their desired position on the board.
@@ -310,36 +310,43 @@ def player_turn(board, current_player):
     Returns the updated game board.
     """
     index = get_player_input(
-        board, current_player)  # Get the player's input for the desired position
-    if current_player == 0:
-        piece = 'X'  # Set the player's piece to 'x'
-    else:
-        piece = 'O'
+        board, piece)  # Get the player's input for the desired position
+
     # Update the game board with the player's piece at the specified index
     board = update_board(board, piece, index)
     return board
 
 
-def game_loop(board, current_player):
+def game_loop(board, piece):
     """
     This function represents the main game loop.
     It takes the current game board and the current player as input.
     It alternates between players, prompts for player input, and updates the board.
     If a player wins, it prints a congratulatory message and returns.
     """
-    current_player = (current_player + 1) % 2  # Switch to the next player
     print_board(board)  # Print the current game board
 
     if check_for_win(board) == False:  # Check if there is no winner yet
         # Prompt the current player for their turn
-        board = player_turn(board, current_player)
+        board = player_turn(board, piece)
     else:
+
+        if piece == 'X':  # Switch to the next player
+            piece = 'O'
+        else:
+            piece = 'X'
+
         # Print a congratulatory message
-        print(f"Congrates Player{current_player}, you won.")
+        print(f"Congrates Player {piece}, you won.")
         return  # Exit the game loop if a player wins
 
+    if piece == 'X':  # Switch to the next player
+        piece = 'O'
+    else:
+        piece = 'X'
+
     # Recursively call the game loop with the updated board and player
-    game_loop(board, current_player)
+    game_loop(board, piece)
 
 
 def main():
@@ -349,9 +356,10 @@ def main():
     board = {}
     welcome_message()
     board = generate_starting_board()
+    print(board)
 
-    current_player = -1
-    game_loop(board, current_player)
+    piece = 'X'
+    game_loop(board, piece)
 
 
 if __name__ == "__main__":
