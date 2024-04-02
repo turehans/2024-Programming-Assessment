@@ -242,15 +242,15 @@ def get_player_input(board, current_player):
                 try:
                     # Prompt the player to enter the position and convert it to an integer
                     position.update(
-                        {cord: (-1 + int(input(f"Please enter the {cord} position between 1 and {BOARD_SIZE}: \n")))}
+                        {cord: (-1 + int(input(f"\nPlease enter the {cord} position between 1 and {BOARD_SIZE}: \n")))}
                     )
                 except ValueError:
-                    print("Please enter a valid number")
+                    print("\nPlease enter a valid number")
                 # Check if the entered position is within the desired range
                 if 0 <= position[cord] < BOARD_SIZE:
                     gotten_player_input = True  # Set the flag to True if the input is valid
                 else:
-                    print("Please enter a number in the desired range")
+                    print("\nPlease enter a number in the desired range")
 
         # Calculate the index based on the entered positions
         index = str(position['x']*BOARD_SIZE + position['y'])
@@ -259,7 +259,6 @@ def get_player_input(board, current_player):
             cord_is_available = True  # Set the flag to True if the position is available
         else:
             print("Your position has already been taken, please try again\n")
-
     return index  # Return the index of the chosen position
 
 
