@@ -37,9 +37,9 @@ def test_board():
     for i in range(1 + (2*BOARD_SIZE)):
         print(' _', end='')
     print("\n")
-    for x_cord in range(BOARD_SIZE):
+    for y_cord in range(BOARD_SIZE):
         print('|', end='')
-        for y_cord in range(BOARD_SIZE):
+        for x_cord in range(BOARD_SIZE):
             index = str(x_cord*BOARD_SIZE + y_cord)
             # Print the cell value
             print(f" {index} ", end='|')
@@ -219,9 +219,9 @@ def print_board(board):
         for i in range(1 + (2*BOARD_SIZE)):
             print(' _', end='')
         print("\n")
-        for x_cord in range(BOARD_SIZE):
+        for y_cord in range(BOARD_SIZE):
             print('|', end='')
-            for y_cord in range(BOARD_SIZE):
+            for x_cord in range(BOARD_SIZE):
                 index = str(x_cord*BOARD_SIZE + y_cord)
                 # Print the cell value
                 print(f" {board[index][z_cord]} ", end='|')
@@ -252,7 +252,7 @@ def get_player_input(board, current_player):
     # Define the size of the board
     global BOARD_SIZE
     position = {}  # Create an empty dictionary to store the player's position
-    cords = ["y", "x"]  # Define the coordinates as 'x' and 'y'
+    cords = ["x", "y"]  # Define the coordinates as 'x' and 'y'
 
     cord_is_available = False  # Initialize a flag to check if the position is available
     while cord_is_available == False:  # Continue looping until a valid position is entered
