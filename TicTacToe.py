@@ -30,6 +30,26 @@ def welcome_message():
     print("4. The game ends in a draw if all cells are filled without a winner.\n", end='\n')
 
 
+def test_board():
+    global BOARD_SIZE
+    print('')
+    # Print the horizontal lines
+    for i in range(1 + (2*BOARD_SIZE)):
+        print(' _', end='')
+    print("\n")
+    for x_cord in range(BOARD_SIZE):
+        print('|', end='')
+        for y_cord in range(BOARD_SIZE):
+            index = str(x_cord*BOARD_SIZE + y_cord)
+            # Print the cell value
+            print(f" {index} ", end='|')
+        print('\n', end='')
+        # Print the horizontal lines
+        for i in range(1 + (2*BOARD_SIZE)):
+            print(' _', end='')
+        print("\n")
+
+
 def check_for_win(board):
     """
     Checks if there is a winner in the game.
@@ -92,6 +112,7 @@ def check_for_win(board):
             return True
 
     # Check diagonals x stays constant
+    print("Testing now")
     for x_cord in range(BOARD_SIZE):
         diagonal1 = []
         diagonal2 = []
@@ -172,8 +193,8 @@ def generate_starting_board():
     """
     global BOARD_SIZE
     board = {}
-    for y_cord in range(BOARD_SIZE):
-        for x_cord in range(BOARD_SIZE):
+    for x_cord in range(BOARD_SIZE):
+        for y_cord in range(BOARD_SIZE):
             # Initialize each cell with an empty space
             board.update({f"{x_cord*BOARD_SIZE+y_cord}": [' '] * BOARD_SIZE})
 
@@ -198,9 +219,9 @@ def print_board(board):
         for i in range(1 + (2*BOARD_SIZE)):
             print(' _', end='')
         print("\n")
-        for y_cord in range(BOARD_SIZE):
+        for x_cord in range(BOARD_SIZE):
             print('|', end='')
-            for x_cord in range(BOARD_SIZE):
+            for y_cord in range(BOARD_SIZE):
                 index = str(x_cord*BOARD_SIZE + y_cord)
                 # Print the cell value
                 print(f" {board[index][z_cord]} ", end='|')
@@ -231,7 +252,7 @@ def get_player_input(board, current_player):
     # Define the size of the board
     global BOARD_SIZE
     position = {}  # Create an empty dictionary to store the player's position
-    cords = ["x", "y"]  # Define the coordinates as 'x' and 'y'
+    cords = ["y", "x"]  # Define the coordinates as 'x' and 'y'
 
     cord_is_available = False  # Initialize a flag to check if the position is available
     while cord_is_available == False:  # Continue looping until a valid position is entered
@@ -355,7 +376,8 @@ def main():
     board = {}
     welcome_message()
     board = generate_starting_board()
-    print(board)
+    test_board()
+    # print(board)
 
     piece = 'X'
     game_loop(board, piece)

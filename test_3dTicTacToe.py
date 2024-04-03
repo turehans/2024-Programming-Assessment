@@ -328,7 +328,7 @@ def check_3d_diagonals_x_is_constant():
         print("Test 1 failed")
 
     # Test case 2:
-    board = {'0': ['O', 'O', 'X'], '3': ['O', 'X', ' '], '6': ['X', ' ', ' '], '1': [' ', ' ', ' '], '4': [
+    board = {'0': [' ', ' ', 'X'], '3': [' ', 'X', ' '], '6': ['X', ' ', ' '], '1': [' ', ' ', ' '], '4': [
         ' ', ' ', ' '], '7': [' ', ' ', ' '], '2': [' ', ' ', ' '], '5': [' ', ' ', ' '], '8': [' ', ' ', ' ']}
     try:
         assert call_check_for_winner(board) == True
