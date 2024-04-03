@@ -111,14 +111,14 @@ def check_for_win(board):
         if len(set(diagonal2)) == 1 and diagonal2[0] != ' ':
             return True
 
-    # Check diagonals x stays constant
-    print("Testing now")
-    for x_cord in range(BOARD_SIZE):
+    # Check diagonals y stays constant
+    print()
+    for y_cord in range(BOARD_SIZE):
         diagonal1 = []
         diagonal2 = []
         for i in range(BOARD_SIZE):
-            index1 = str(x_cord*BOARD_SIZE + i)
-            index2 = str(x_cord * BOARD_SIZE + (BOARD_SIZE - 1 - i))
+            index1 = str(i * BOARD_SIZE + y_cord)
+            index2 = str((BOARD_SIZE - i - 1) * BOARD_SIZE + y_cord)
             diagonal1.append(board[index1][i])
             diagonal2.append(board[index2][i])
         # If all elements in the diagonal1 are the same and not empty, there is a winner
@@ -128,13 +128,13 @@ def check_for_win(board):
         if len(set(diagonal2)) == 1 and diagonal2[0] != ' ':
             return True
 
-    # Check diagonals y stays constant
-    for y_cord in range(BOARD_SIZE):
+    # Check diagonals x stays constant
+    for x_cord in range(BOARD_SIZE):
         diagonal1 = []
         diagonal2 = []
         for i in range(BOARD_SIZE):
-            index1 = str(i * BOARD_SIZE + y_cord)
-            index2 = str(i * BOARD_SIZE + (BOARD_SIZE - 1 - y_cord))
+            index1 = str(x_cord * BOARD_SIZE + i)
+            index2 = str(x_cord * BOARD_SIZE + (BOARD_SIZE - 1 - i))
             diagonal1.append(board[index1][i])
             diagonal2.append(board[index2][i])
         # If all elements in the diagonal1 are the same and not empty, there is a winner
