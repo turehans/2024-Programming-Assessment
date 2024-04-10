@@ -15,7 +15,9 @@ logo = """
 
 # Define the size of the board
 
-BOARD_SIZE = 3
+board_size = 3
+MIN_BOARD_SIZE = 3
+MAX_BOARD_SIZE = 10
 
 
 # Function to display the welcome message
@@ -30,21 +32,21 @@ def welcome_message():
 
 
 def test_board():
-    global BOARD_SIZE
+    global board_size
     print('')
     # Print the horizontal lines
-    for i in range(1 + (2*BOARD_SIZE)):
+    for i in range(1 + (2*board_size)):
         print(' _', end='')
     print("\n")
-    for y_cord in range(BOARD_SIZE):
+    for y_cord in range(board_size):
         print('|', end='')
-        for x_cord in range(BOARD_SIZE):
-            index = str(x_cord*BOARD_SIZE + y_cord)
+        for x_cord in range(board_size):
+            index = str(x_cord*board_size + y_cord)
             # Print the cell value
             print(f" {index} ", end='|')
         print('\n', end='')
         # Print the horizontal lines
-        for i in range(1 + (2*BOARD_SIZE)):
+        for i in range(1 + (2*board_size)):
             print(' _', end='')
         print("\n")
 
@@ -59,48 +61,48 @@ def check_for_win(board):
     Returns:
         bool: True if there is a winner, False otherwise.
     """
-    global BOARD_SIZE
+    global board_size
 
     # Check rows
-    for z_cord in range(BOARD_SIZE):
-        for x_cord in range(BOARD_SIZE):
+    for z_cord in range(board_size):
+        for x_cord in range(board_size):
             row = []
-            for y_cord in range(BOARD_SIZE):
-                index = str(x_cord * BOARD_SIZE + y_cord)
+            for y_cord in range(board_size):
+                index = str(x_cord * board_size + y_cord)
                 row.append(board[index][z_cord])
             # If all elements in the row are the same and not empty, there is a winner
             if len(set(row)) == 1 and row[0] != ' ':
                 return True
 
     # Check columns
-    for z_cord in range(BOARD_SIZE):
-        for y_cord in range(BOARD_SIZE):
+    for z_cord in range(board_size):
+        for y_cord in range(board_size):
             column = []
-            for x_cord in range(BOARD_SIZE):
-                index = str(x_cord * BOARD_SIZE + y_cord)
+            for x_cord in range(board_size):
+                index = str(x_cord * board_size + y_cord)
                 column.append(board[index][z_cord])
             # If all elements in the column are the same and not empty, there is a winner
             if len(set(column)) == 1 and column[0] != ' ':
                 return True
 
     # check vertical
-    for x_cord in range(BOARD_SIZE):
-        for y_cord in range(BOARD_SIZE):
+    for x_cord in range(board_size):
+        for y_cord in range(board_size):
             vertical = []
-            index = str(x_cord * BOARD_SIZE + y_cord)
-            for z_cord in range(BOARD_SIZE):
+            index = str(x_cord * board_size + y_cord)
+            for z_cord in range(board_size):
                 vertical.append(board[index][z_cord])
             # if all elements in the column are the same and not empty, there is a winner
             if len(set(vertical)) == 1 and vertical[0] != ' ':
                 return True
 
     # Check diagonals
-    for z_cord in range(BOARD_SIZE):
+    for z_cord in range(board_size):
         diagonal1 = []
         diagonal2 = []
-        for i in range(BOARD_SIZE):
-            index1 = str(i * BOARD_SIZE + i)
-            index2 = str(i * BOARD_SIZE + (BOARD_SIZE - 1 - i))
+        for i in range(board_size):
+            index1 = str(i * board_size + i)
+            index2 = str(i * board_size + (board_size - 1 - i))
             diagonal1.append(board[index1][z_cord])
             diagonal2.append(board[index2][z_cord])
         # If all elements in the diagonal1 are the same and not empty, there is a winner
@@ -112,12 +114,12 @@ def check_for_win(board):
 
     # Check diagonals y stays constant
     print()
-    for y_cord in range(BOARD_SIZE):
+    for y_cord in range(board_size):
         diagonal1 = []
         diagonal2 = []
-        for i in range(BOARD_SIZE):
-            index1 = str(i * BOARD_SIZE + y_cord)
-            index2 = str((BOARD_SIZE - i - 1) * BOARD_SIZE + y_cord)
+        for i in range(board_size):
+            index1 = str(i * board_size + y_cord)
+            index2 = str((board_size - i - 1) * board_size + y_cord)
             diagonal1.append(board[index1][i])
             diagonal2.append(board[index2][i])
         # If all elements in the diagonal1 are the same and not empty, there is a winner
@@ -128,12 +130,12 @@ def check_for_win(board):
             return True
 
     # Check diagonals x stays constant
-    for x_cord in range(BOARD_SIZE):
+    for x_cord in range(board_size):
         diagonal1 = []
         diagonal2 = []
-        for i in range(BOARD_SIZE):
-            index1 = str(x_cord * BOARD_SIZE + i)
-            index2 = str(x_cord * BOARD_SIZE + (BOARD_SIZE - 1 - i))
+        for i in range(board_size):
+            index1 = str(x_cord * board_size + i)
+            index2 = str(x_cord * board_size + (board_size - 1 - i))
             diagonal1.append(board[index1][i])
             diagonal2.append(board[index2][i])
         # If all elements in the diagonal1 are the same and not empty, there is a winner
@@ -148,16 +150,16 @@ def check_for_win(board):
     diagonal2 = []
     diagonal3 = []
     diagonal4 = []
-    for i in range(BOARD_SIZE):
+    for i in range(board_size):
         # bottom left
-        index1 = str(i * BOARD_SIZE + i)
+        index1 = str(i * board_size + i)
         # top right
-        index2 = str(i * BOARD_SIZE + (BOARD_SIZE - 1 - i))
+        index2 = str(i * board_size + (board_size - 1 - i))
         # bottom right
-        index3 = str((BOARD_SIZE - 1 - i) *
-                     BOARD_SIZE + (BOARD_SIZE - 1 - i))
+        index3 = str((board_size - 1 - i) *
+                     board_size + (board_size - 1 - i))
         # top left
-        index4 = str((BOARD_SIZE - 1 - i) * BOARD_SIZE + i)
+        index4 = str((board_size - 1 - i) * board_size + i)
 
         diagonal1.append(board[index1][i])
         diagonal2.append(board[index2][i])
@@ -190,12 +192,12 @@ def generate_starting_board():
     Returns:
         dict: The starting board represented as a dictionary.
     """
-    global BOARD_SIZE
+    global board_size
     board = {}
-    for x_cord in range(BOARD_SIZE):
-        for y_cord in range(BOARD_SIZE):
+    for x_cord in range(board_size):
+        for y_cord in range(board_size):
             # Initialize each cell with an empty space
-            board.update({f"{x_cord*BOARD_SIZE+y_cord}": [' '] * BOARD_SIZE})
+            board.update({f"{x_cord*board_size+y_cord}": [' '] * board_size})
 
     return board
 
@@ -211,22 +213,22 @@ def print_board(board):
         None
     """
 
-    global BOARD_SIZE
-    for z_cord in range(BOARD_SIZE):
+    global board_size
+    for z_cord in range(board_size):
         print('')
         # Print the horizontal lines
-        for i in range(1 + (2*BOARD_SIZE)):
+        for i in range(1 + (2*board_size)):
             print(' _', end='')
         print("\n")
-        for y_cord in range(BOARD_SIZE):
+        for y_cord in range(board_size):
             print('|', end='')
-            for x_cord in range(BOARD_SIZE):
-                index = str(x_cord*BOARD_SIZE + y_cord)
+            for x_cord in range(board_size):
+                index = str(x_cord*board_size + y_cord)
                 # Print the cell value
                 print(f" {board[index][z_cord]} ", end='|')
             print('\n', end='')
             # Print the horizontal lines
-            for i in range(1 + (2*BOARD_SIZE)):
+            for i in range(1 + (2*board_size)):
                 print(' _', end='')
             print("\n")
 
@@ -249,7 +251,7 @@ def get_player_input(board, current_player):
     print(f"Player {current_player} it is your turn\n")
 
     # Define the size of the board
-    global BOARD_SIZE
+    global board_size
     position = {}  # Create an empty dictionary to store the player's position
     cords = ["x", "y"]  # Define the coordinates as 'x' and 'y'
 
@@ -262,7 +264,7 @@ def get_player_input(board, current_player):
                 try:
                     # Prompt the player to enter the position and convert it to an integer
                     user_input = input(
-                        f"\nPlease enter the {cord} position between 1 and {BOARD_SIZE}: ").strip()
+                        f"\nPlease enter the {cord} position between 1 and {board_size}: ").strip()
 
                     if user_input == "" or user_input is None:
                         raise ValueError("Empty input")
@@ -273,13 +275,13 @@ def get_player_input(board, current_player):
                     continue
 
                 # Check if the entered position is within the desired range
-                if 0 <= position[cord] < BOARD_SIZE:
+                if 0 <= position[cord] < board_size:
                     gotten_player_input = True  # Set the flag to True if the input is valid
                 else:
                     print("\nPlease enter a number in the desired range")
 
         # Calculate the index based on the entered positions
-        index = str(position['x']*BOARD_SIZE + position['y'])
+        index = str(position['x']*board_size + position['y'])
         # Check if the position is clear
         if check_that_position_is_clear(board, index) is True:
             cord_is_available = True  # Set the flag to True if the position is available
@@ -299,8 +301,8 @@ def check_that_position_is_clear(board, index):
     Returns:
         bool: True if the position is clear, False otherwise.
     """
-    global BOARD_SIZE
-    if board[index][BOARD_SIZE-1] == ' ':  # Check if the first position in the row is empty
+    global board_size
+    if board[index][board_size-1] == ' ':  # Check if the first position in the row is empty
         return True
     else:
         return False
@@ -319,8 +321,8 @@ def update_board(board, piece, index):
     Returns:
         list: The updated game board.
     """
-    global BOARD_SIZE
-    for i in range(BOARD_SIZE):
+    global board_size
+    for i in range(board_size):
         if board[index][i] == ' ':  # Check if the position is empty
             board[index][i] = piece  # Place the player's piece at the position
             return board
@@ -340,6 +342,29 @@ def player_turn(board, piece):
     # Update the game board with the player's piece at the specified index
     board = update_board(board, piece, index)
     return board
+
+
+def choose_board_size():
+    global board_size
+    gotten_input = False
+
+    while gotten_input is False:
+
+        try:
+            user_input = input("Please enter the size of the board: ").strip()
+            if user_input == "" or user_input is None:
+                raise ValueError("Empty input", end='\n\n')
+            elif int(user_input) < MIN_BOARD_SIZE:
+                print("Board size should be greater than 2", end='\n\n')
+            elif int(user_input) > MAX_BOARD_SIZE:
+                print("Board size should be less than 11", end='\n\n')
+            else:
+                board_size = int(user_input)
+                gotten_input = True
+
+        except ValueError:
+            print("Please enter a valid number")
+            continue
 
 
 def game_loop(board, piece):
@@ -408,8 +433,13 @@ def main():
 
     while game_active is True:  # Continue looping while the game is active
         board = {}
+
+        # ask for board size
+        choose_board_size()
+
         board = generate_starting_board()
         piece = 'X'
+
         game_loop(board, piece)
 
         # Prompt the player to play again
