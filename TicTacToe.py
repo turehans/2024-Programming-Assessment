@@ -407,7 +407,13 @@ def game_loop(board, piece):
     print_board(board)  # Print the current game board
 
     if check_for_win(board) is False:  # Check if there is no winner yet
-        # Prompt the current player for their turn
+
+        # check for a draw, if all cells are filled without a winner
+        if all(all(cell != ' ' for cell in row) for row in board.values()):
+            print("The game is a draw.")
+            return
+
+            # Prompt the current player for their turn
         board = player_turn(board, piece)
     else:
 
