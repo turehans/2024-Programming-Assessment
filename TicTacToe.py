@@ -22,6 +22,9 @@ MAX_BOARD_SIZE = 10
 
 # Function to display the welcome message
 def welcome_message():
+    """
+    Prints the welcome message and rules of the game.
+    """
     print(logo)  # Print the game logo
     print("Welcome to 3d Tic Tac Toe")
     print("Rules:")
@@ -32,6 +35,18 @@ def welcome_message():
 
 
 def test_board():
+    """
+    Prints a test board for Tic-Tac-Toe game.
+
+    This function prints a test board for Tic-Tac-Toe game. It displays the board
+    with the specified size and prints the cell values and horizontal lines.
+
+    Parameters:
+    None
+
+    Returns:
+    None
+    """
     global board_size
     print('')
     # Print the horizontal lines
@@ -345,12 +360,27 @@ def player_turn(board, piece):
 
 
 def choose_board_size():
+    """
+    Prompts the user to enter the size of the board and validates the input.
+
+    The function asks the user to enter the size of the board and checks if the input is valid.
+    The input should be a positive integer between MIN_BOARD_SIZE and MAX_BOARD_SIZE.
+    If the input is valid, the global variable board_size is updated with the input value.
+    If the input is not valid, appropriate error messages are displayed and the user is prompted again.
+
+    Parameters:
+    None
+
+    Returns:
+    None
+    """
     global board_size
     gotten_input = False
 
     while gotten_input is False:
 
         try:
+            # Code for handling exceptions and displaying error messages
             user_input = input("Please enter the size of the board: ").strip()
             if user_input == "" or user_input is None:
                 raise ValueError("Empty input", end='\n\n')
