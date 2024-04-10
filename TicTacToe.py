@@ -3,15 +3,14 @@ import random
 # My 3d tic tac toe
 # Define the logo for the game
 logo = """
- ______   ______    __________________ _______   _________ _______  _______   _________ _______  _______ 
+   ____   ______    __________________ _______   _________ _______  _______   _________ _______  _______ 
 / ___  \ (  __  \   \__   __/\__   __/(  ____ \  \__   __/(  ___  )(  ____ \  \__   __/(  ___  )(  ____ \\
 \/   \  \| (  \  )     ) (      ) (   | (    \/     ) (   | (   ) || (    \/     ) (   | (   ) || (    \/
    ___) /| |   ) |     | |      | |   | |           | |   | (___) || |           | |   | |   | || (__    
   (___ ( | |   | |     | |      | |   | |           | |   |  ___  || |           | |   | |   | ||  __)   
       ) \| |   ) |     | |      | |   | |           | |   | (   ) || |           | |   | |   | || (      
 /\___/  /| (__/  )     | |   ___) (___| (____/\     | |   | )   ( || (____/\     | |   | (___) || (____/\\
-\______/ (______/      )_(   \_______/(_______/     )_(   |/     \|(_______/     )_(   (_______)(_______/
-                                                                                                         
+\______/ (______/      )_(   \_______/(_______/     )_(   |/     \|(_______/     )_(   (_______)(_______/                                                                        
 """
 
 # Define the size of the board
@@ -255,11 +254,11 @@ def get_player_input(board, current_player):
     cords = ["x", "y"]  # Define the coordinates as 'x' and 'y'
 
     cord_is_available = False  # Initialize a flag to check if the position is available
-    while cord_is_available == False:  # Continue looping until a valid position is entered
+    while cord_is_available is False:  # Continue looping until a valid position is entered
         for cord in cords:  # Iterate through the coordinates
             # Initialize a flag to check if the player's input is valid
             gotten_player_input = False
-            while gotten_player_input == False:  # Continue looping until a valid input is entered
+            while gotten_player_input is False:  # Continue looping until a valid input is entered
                 try:
                     # Prompt the player to enter the position and convert it to an integer
                     position.update(
@@ -276,7 +275,7 @@ def get_player_input(board, current_player):
         # Calculate the index based on the entered positions
         index = str(position['x']*BOARD_SIZE + position['y'])
         # Check if the position is clear
-        if check_that_position_is_clear(board, index) == True:
+        if check_that_position_is_clear(board, index) is True:
             cord_is_available = True  # Set the flag to True if the position is available
         else:
             print("Your position has already been taken, please try again\n")
@@ -346,7 +345,7 @@ def game_loop(board, piece):
     """
     print_board(board)  # Print the current game board
 
-    if check_for_win(board) == False:  # Check if there is no winner yet
+    if check_for_win(board) is False:  # Check if there is no winner yet
         # Prompt the current player for their turn
         board = player_turn(board, piece)
     else:
