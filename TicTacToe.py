@@ -3,14 +3,14 @@ import random
 # My 3d tic tac toe
 # Define the logo for the game
 logo = """
-   ____   ______    __________________ _______   _________ _______  _______   _________ _______  _______ 
+   ____   ______    __________________ _______   _________ _______  _______   _________ _______  _______
 / ___  \ (  __  \   \__   __/\__   __/(  ____ \  \__   __/(  ___  )(  ____ \  \__   __/(  ___  )(  ____ \\
 \/   \  \| (  \  )     ) (      ) (   | (    \/     ) (   | (   ) || (    \/     ) (   | (   ) || (    \/
-   ___) /| |   ) |     | |      | |   | |           | |   | (___) || |           | |   | |   | || (__    
-  (___ ( | |   | |     | |      | |   | |           | |   |  ___  || |           | |   | |   | ||  __)   
-      ) \| |   ) |     | |      | |   | |           | |   | (   ) || |           | |   | |   | || (      
+   ___) /| |   ) |     | |      | |   | |           | |   | (___) || |           | |   | |   | || (__
+  (___ ( | |   | |     | |      | |   | |           | |   |  ___  || |           | |   | |   | ||  __)
+      ) \| |   ) |     | |      | |   | |           | |   | (   ) || |           | |   | |   | || (
 /\___/  /| (__/  )     | |   ___) (___| (____/\     | |   | )   ( || (____/\     | |   | (___) || (____/\\
-\______/ (______/      )_(   \_______/(_______/     )_(   |/     \|(_______/     )_(   (_______)(_______/                                                                        
+\______/ (______/      )_(   \_______/(_______/     )_(   |/     \|(_______/     )_(   (_______)(_______/
 """
 
 # Define the size of the board
@@ -261,11 +261,17 @@ def get_player_input(board, current_player):
             while gotten_player_input is False:  # Continue looping until a valid input is entered
                 try:
                     # Prompt the player to enter the position and convert it to an integer
-                    position.update(
-                        {cord: (-1 + int(input(f"\nPlease enter the {cord} position between 1 and {BOARD_SIZE}: \n")))}
-                    )
+                    user_input = input(
+                        f"\nPlease enter the {cord} position between 1 and {BOARD_SIZE}: ").strip()
+
+                    if user_input == "" or user_input is None:
+                        raise ValueError("Empty input")
+
+                    position.update({cord: (-1 + int(user_input))})
                 except ValueError:
                     print("\nPlease enter a valid number")
+                    continue
+
                 # Check if the entered position is within the desired range
                 if 0 <= position[cord] < BOARD_SIZE:
                     gotten_player_input = True  # Set the flag to True if the input is valid
@@ -368,18 +374,50 @@ def game_loop(board, piece):
     game_loop(board, piece)
 
 
+def check_if_player_wants_to_play_again():
+    """
+    Prompts the player to play again or quit the game.
+
+    Returns:
+        bool: True if the player wants to play again, False otherwise.
+    """
+    print("\n")
+    try:
+        play_again = input("Do you want to play again? (yes/no): ")
+    except ValueError:
+        print("Please enter a valid input")
+
+    play_again.lower()
+
+    if play_again == 'yes':
+        return True
+    elif play_again == 'no':
+        return False
+    else:
+        print("Please enter yes or no")
+        check_if_player_wants_to_play_again()
+
+
 def main():
     """
     This function represents the main entry point of the program.
     """
-    board = {}
     welcome_message()
-    board = generate_starting_board()
-    test_board()
-    # print(board)
 
-    piece = 'X'
-    game_loop(board, piece)
+    game_active = True  # Initialize the game flag to True
+
+    while game_active is True:  # Continue looping while the game is active
+        board = {}
+        board = generate_starting_board()
+        piece = 'X'
+        game_loop(board, piece)
+
+        # Prompt the player to play again
+        if check_if_player_wants_to_play_again() is True:
+            game_active = True
+        else:
+            game_active = False
+            print("\nThank you for playing 3D Tic Tac Toe")
 
 
 if __name__ == "__main__":
